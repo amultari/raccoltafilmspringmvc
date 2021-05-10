@@ -2,6 +2,7 @@ package it.prova.raccoltafilmspringmvc.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -71,6 +73,26 @@ public class RegistaController {
 		model.addAttribute("registi_list_attribute", registi);
 		return "regista/list";
 	}
+	
+	@GetMapping("/edit/{idRegista}")
+	public String editRegista(@PathVariable(required = true) Long idRegista, Model model) {
+		model.addAttribute("edit_regista_attr", registaService.caricaSingoloElemento(idRegista));
+		return "regista/edit";
+	}
+	
+	@PostMapping("/update")
+	public String updateRegista(@Valid @ModelAttribute("edit_regista_attr") Regista regista, BindingResult result,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+		
+		if (result.hasErrors()) {
+			return "regista/edit";
+		}
+		registaService.aggiorna(regista);
+		
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/regista";
+	}
+
 
 	@GetMapping(value = "/searchRegistiAjax", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody String searchRegista(@RequestParam String term) {

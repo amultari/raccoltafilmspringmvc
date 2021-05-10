@@ -67,7 +67,7 @@
 									<td>${registaItem.sesso.abbreviazione }</td>
 									<td>
 										<a class="btn  btn-sm btn-outline-secondary" href="ExecuteVisualizzaRegistaServlet?idRegista=${registaItem.id }">Visualizza</a>
-										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="laservletpermodificare">Edit</a>
+										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath }/regista/edit/${registaItem.id }">Edit</a>
 										<a class="btn btn-outline-danger btn-sm" href="laservletperrimuovere">Delete</a>
 									</td>
 								</tr>
