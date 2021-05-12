@@ -53,6 +53,7 @@ public class RegistaController {
 	@PostMapping("/save")
 	public String saveRegista(@Valid @ModelAttribute("insert_regista_attr") Regista regista, BindingResult result,
 			RedirectAttributes redirectAttrs) {
+		
 		if (result.hasErrors()) {
 			return "regista/insert";
 		}

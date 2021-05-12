@@ -2,6 +2,7 @@ package it.prova.raccoltafilmspringmvc.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.raccoltafilmspringmvc.model.Film;
 import it.prova.raccoltafilmspringmvc.service.FilmService;
-import it.prova.raccoltafilmspringmvc.service.RegistaService;
 
 @Controller
 @RequestMapping(value = "/film")
@@ -27,8 +27,6 @@ public class FilmController {
 
 	@Autowired
 	private FilmService filmService;
-	@Autowired
-	private RegistaService registaService;
 
 	@GetMapping
 	public ModelAndView listAllFilms() {
@@ -47,15 +45,7 @@ public class FilmController {
 
 	@PostMapping("/save")
 	public String saveFilm(@Valid @ModelAttribute("insert_film_attr") Film film, BindingResult result,
-			RedirectAttributes redirectAttrs) {
-
-		// se il regista è valorizzato dobbiamo provare a caricarlo perché
-		// ci aiuta in pagina. Altrimenti devo fare rejectValue 'a mano' altrimenti
-		// comunque viene fatta una new durante il binding, anche se arriva stringa vuota
-		if (film.getRegista() != null && film.getRegista().getId() != null)
-			film.setRegista(registaService.caricaSingoloElemento(film.getRegista().getId()));
-		else
-			result.rejectValue("regista", "regista.notnull");
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
 			return "film/insert";
