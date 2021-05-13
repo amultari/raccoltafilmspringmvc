@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	
 	@RequestMapping(value = {"/home",""})
-	public String loginMessage() {
+	public String home() {
 		return "index";
 	}
 }

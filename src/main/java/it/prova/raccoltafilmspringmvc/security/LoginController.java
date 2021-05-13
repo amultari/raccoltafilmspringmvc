@@ -18,14 +18,15 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = {RequestMethod.POST,RequestMethod.GET})
 	public String loginPage(@RequestParam(value = "error", required = false) String error,
 			@RequestParam(value = "logout", required = false) String logout, Model model) {
-		String errorMessage = null;
+		String message = null;
 		if (error != null) {
-			errorMessage = "Username or Password is incorrect !!";
+			message = "Username or Password is incorrect !!";
+			model.addAttribute("errorMessage", message);
 		}
 		if (logout != null) {
-			errorMessage = "You have been successfully logged out !!";
+			message = "You have been successfully logged out !!";
+			model.addAttribute("infoMessage", message);
 		}
-		model.addAttribute("errorMessage", errorMessage);
 		return "login";
 	}
 
@@ -36,6 +37,12 @@ public class LoginController {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return "redirect:/login?logout=true";
+	}
+	
+	@RequestMapping(value = "/accessDenied", method = {RequestMethod.POST,RequestMethod.GET})
+	public String createRegista(Model model) {
+		model.addAttribute("errorMessage", "Accesso negato.");
+		return "index";
 	}
 
 }

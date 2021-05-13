@@ -38,6 +38,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
          .antMatchers("/**").hasAnyRole("ADMIN", "CLASSIC_USER")
          //.antMatchers("/anonymous*").anonymous()
          .anyRequest().authenticated()
+         .and().exceptionHandling().accessDeniedPage("/accessDenied")
          .and()
          	.formLogin()
          	.loginPage("/login")
@@ -52,5 +53,6 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
          .and()
             .csrf()
             .disable();
+//         
     }
 }

@@ -49,6 +49,10 @@
 			  ${errorMessage}
 			</div>
 			
+			<div class="alert alert-info alert-dismissible fade show ${infoMessage==null?'d-none': ''}" role="alert">
+			  ${infoMessage}
+			</div>
+			
 			
 		  <img class="mb-4" src="${pageContext.request.contextPath}/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
 		  <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
