@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!-- navbar -->
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
 
@@ -21,20 +22,22 @@
           <a class="dropdown-item" href="${pageContext.request.contextPath}/film/insert">Inserisci Film</a>
         </div>
       </li>
-      <c:if test="${userInfo.isAdmin() }">
+      <sec:authorize access="hasRole('ADMIN')">
 	      <li class="nav-item dropdown">
 	        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Gestione Utenze</a>
 	        <div class="dropdown-menu" aria-labelledby="dropdown01">
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/PrepareSearchUtenteServlet">Ricerca Utenti</a>
-	          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/PrepareInsertUtenteServlet">Inserisci Utente</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/search">Ricerca Utenti</a>
+	          <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/insert">Inserisci Utente</a>
 	        </div>
 	      </li>
-	   </c:if>
+	   </sec:authorize>
     </ul>
-   <ul class="nav navbar-nav navbar-right">
-     <li><p class="navbar-text">Utente: ${userInfo.username }(${userInfo.nome } ${userInfo.cognome })
-     <a href="${pageContext.request.contextPath}/logout">Logout</a></p> 
-     </li>
-   </ul>
+    <sec:authorize access="isAuthenticated()">
+	   <ul class="nav navbar-nav navbar-right">
+	     <li><p class="navbar-text">Utente: <sec:authentication property="principal.username" />
+	     <a href="${pageContext.request.contextPath}/logout">Logout</a></p> 
+	     </li>
+	   </ul>
+   </sec:authorize>
   </div>
 </nav>

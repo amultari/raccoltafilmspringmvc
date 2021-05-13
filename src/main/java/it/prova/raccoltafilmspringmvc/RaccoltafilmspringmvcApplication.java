@@ -38,6 +38,8 @@ public class RaccoltafilmspringmvcApplication implements CommandLineRunner {
 			ruoloServiceInstance.inserisciNuovo(new Ruolo("Classic User", "ROLE_CLASSIC_USER"));
 		}
 
+		//A DIFFERENZA DEGLI ALTRI PROGETTI CERCO SOLO PER USERNAME PERCHE' SE VADO ANCHE PER 
+		//PASSWORD OGNI VOLTA NE INSERISCE UNO NUOVO
 		if (utenteServiceInstance.findByUsername("admin") == null) {
 			Utente admin = new Utente("admin", passwordEncoder.encode("admin"), "Mario", "Rossi", new Date());
 			admin.setStato(StatoUtente.ATTIVO);
