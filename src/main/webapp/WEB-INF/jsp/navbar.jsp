@@ -34,7 +34,7 @@
     </ul>
     <sec:authorize access="isAuthenticated()">
 	   <ul class="nav navbar-nav navbar-right">
-	     <li><p class="navbar-text">Utente: <sec:authentication property="principal.username" />
+	     <li><p class="navbar-text">Utente: <sec:authentication property="principal.username" /> 
 	     <a href="${pageContext.request.contextPath}/logout">Logout</a></p> 
 	     </li>
 	   </ul>

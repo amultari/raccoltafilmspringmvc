@@ -3,6 +3,8 @@ package it.prova.raccoltafilmspringmvc.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -17,31 +19,47 @@ public class LoginController {
 
 	@RequestMapping(value = "/login", method = {RequestMethod.POST,RequestMethod.GET})
 	public String loginPage(@RequestParam(value = "error", required = false) String error,
-			@RequestParam(value = "logout", required = false) String logout, Model model) {
-		String message = null;
+			Model model, HttpServletRequest request) {
 		if (error != null) {
-			message = "Username or Password is incorrect !!";
-			model.addAttribute("errorMessage", message);
-		}
-		if (logout != null) {
-			message = "You have been successfully logged out !!";
-			model.addAttribute("infoMessage", message);
+			model.addAttribute("errorMessage", 
+                     getErrorMessage(request, "SPRING_SECURITY_LAST_EXCEPTION"));
 		}
 		return "login";
 	}
+	
+	//queto mi serve per fare il display di un messaggio diverso in caso di account bloccato
+    private String getErrorMessage(HttpServletRequest request, String key){
+    
+        Exception exception = 
+                   (Exception) request.getSession().getAttribute(key);
+        
+        String error = "";
+        if (exception instanceof BadCredentialsException) {
+            error = "Invalid username and password!";
+        }else if(exception instanceof LockedException) {
+            error = "Attenzione! Account disabilitato";
+        }else{
+            error = "Invalid username and password!";
+        }
+        
+        return error;
+    }
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
-	public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/executeLogout", method = RequestMethod.GET)
+	public String logoutPage(Model model, HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		//dovrebbe essere già impostato a null dalle impostazioni invalidateHttpSession(true)
+		//nel SecSecurityConfig ma il controllo si fa comunque
 		if (auth != null) {
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/login?logout=true";
+		model.addAttribute("infoMessage", "You have been successfully logged out !!");
+		return "login";
 	}
 	
 	@RequestMapping(value = "/accessDenied", method = {RequestMethod.POST,RequestMethod.GET})
-	public String createRegista(Model model) {
-		model.addAttribute("errorMessage", "Accesso negato.");
+	public String accessDenied(Model model) {
+		model.addAttribute("errorMessage", "Attenzione! Non si dispone delle autorizzazioni per accedere alla funzionalità richiesta.");
 		return "index";
 	}
 

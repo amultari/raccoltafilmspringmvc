@@ -133,7 +133,11 @@ public class Utente {
 	}
 	
 	public boolean isAttivo() {
-		return this.stato.equals(StatoUtente.ATTIVO);
+		return this.stato != null && this.stato.equals(StatoUtente.ATTIVO);
+	}
+	
+	public boolean isDisabilitato() {
+		return this.stato != null && this.stato.equals(StatoUtente.DISABILITATO);
 	}
 
 }

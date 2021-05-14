@@ -10,6 +10,7 @@ import it.prova.raccoltafilmspringmvc.model.Utente;
 
 public interface UtenteRepository extends CrudRepository<Utente, Long> {
 	
+	@EntityGraph(attributePaths = { "ruoli" })
 	Optional<Utente> findByUsername(String username);
 	
 	Utente findByUsernameAndPassword(String username, String password);
