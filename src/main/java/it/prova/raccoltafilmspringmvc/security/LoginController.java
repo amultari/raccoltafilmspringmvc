@@ -27,7 +27,7 @@ public class LoginController {
 		return "login";
 	}
 	
-	//queto mi serve per fare il display di un messaggio diverso in caso di account bloccato
+	//questo mi serve per fare il display di un messaggio diverso in caso di account bloccato
     private String getErrorMessage(HttpServletRequest request, String key){
     
         Exception exception = 

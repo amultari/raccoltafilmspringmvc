@@ -17,6 +17,9 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 	
+	@Autowired
+    private CustomAuthenticationSuccessHandlerImpl successHandler;
+	
 	@Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -42,7 +45,9 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
          .and()
          	.formLogin()
          	.loginPage("/login")
-         	.defaultSuccessUrl("/home")
+         	//.defaultSuccessUrl("/home",true)
+         	//uso un custom handler perché voglio mettere delle user info in session
+         	.successHandler(successHandler)
          	.failureUrl("/login?error=true")
          	.permitAll()
          .and()
