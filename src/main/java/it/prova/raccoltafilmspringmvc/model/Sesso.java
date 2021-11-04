@@ -1,7 +1,7 @@
 package it.prova.raccoltafilmspringmvc.model;
 
 public enum Sesso {
-	MASCHIO("M"), FEMMINA("S");
+	MASCHIO("M"), FEMMINA("F");
 
 	private String abbreviazione;
 
