@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.raccoltafilmspringmvc.model.Film;
 import it.prova.raccoltafilmspringmvc.service.FilmService;
+import it.prova.raccoltafilmspringmvc.service.RegistaService;
 
 @Controller
 @RequestMapping(value = "/film")
@@ -27,6 +28,8 @@ public class FilmController {
 
 	@Autowired
 	private FilmService filmService;
+	@Autowired
+	private RegistaService registaService;
 
 	@GetMapping
 	public ModelAndView listAllFilms() {
@@ -57,7 +60,8 @@ public class FilmController {
 	}
 
 	@GetMapping("/search")
-	public String searchFilm() {
+	public String searchFilm(Model model) {
+		model.addAttribute("registi_list_attribute", registaService.listAllElements());
 		return "film/search";
 	}
 

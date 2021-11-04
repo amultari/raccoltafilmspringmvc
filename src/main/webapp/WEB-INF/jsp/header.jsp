@@ -34,8 +34,12 @@
 
 <!-- Optional JavaScript; choose one of the two! -->
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="${pageContext.request.contextPath}/assets/js/jquery-3.4.1.min.js" ></script>
+<!-- Boostrap bundle already includes Popper.js -->
 <script src="${pageContext.request.contextPath}/assets/js/bootstrap.bundle.min.js" ></script>
+<!-- jquery ui -->
+<script	src="${pageContext.request.contextPath}/assets/js/jqueryUI/jquery-ui.min.js"></script>
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
 <!--
