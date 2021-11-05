@@ -1,83 +1,72 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!doctype html>
-<html lang="it">
+<html lang="it" class="h-100">
 <head>
 	<jsp:include page="../header.jsp" />
 	<title>Pagina dei risultati</title>
 	
-	<!-- style per le pagine diverse dalla index -->
-    <link href="${pageContext.request.contextPath}/assets/css/global.css" rel="stylesheet">
-    
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 	<jsp:include page="../navbar.jsp" />
 	
-	<main role="main" class="container">
+	<!-- Begin page content -->
+	<main class="flex-shrink-0">
+	  <div class="container">
 	
-		<div class="alert alert-success alert-dismissible fade show ${successMessage==null?'d-none': ''}" role="alert">
-		  ${successMessage}
-		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		    <span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="alert alert-danger alert-dismissible fade show d-none" role="alert">
-		  Esempio di operazione fallita!
-		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		    <span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		<div class="alert alert-info alert-dismissible fade show d-none" role="alert">
-		  Aggiungere d-none nelle class per non far apparire
-		  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		    <span aria-hidden="true">&times;</span>
-		  </button>
-		</div>
-		
-		<div class='card'>
-		    <div class='card-header'>
-		        <h5>Lista dei risultati</h5> 
-		    </div>
-		    <div class='card-body'>
-		    	<a class="btn btn-primary " href="PrepareInsertUtenteServlet">Add New</a>
-		    	<a href="PrepareSearchUtenteServlet" class='btn btn-outline-secondary' >
-			            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
-			        </a>
-		    
-		        <div class='table-responsive'>
-		            <table class='table table-striped ' >
-		                <thead>
-		                    <tr>
-		                        <th>Nome</th>
-		                        <th>Cognome</th>
-		                        <th>Username</th>
-		                        <th>Stato</th>
-		                        <th>Azioni</th>
-		                    </tr>
-		                </thead>
-		                <tbody>
-		                	<c:forEach items="${utente_list_attribute }" var="utenteItem">
-								<tr>
-									<td>${utenteItem.nome }</td>
-									<td>${utenteItem.cognome }</td>
-									<td>${utenteItem.username }</td>
-									<td>${utenteItem.stato }</td>
-									<td>
-										<a class="btn btn-sm btn-outline-secondary" href="laservletpervisualizzare?idRegista=${utenteItem.id }">Visualizza</a>
-										<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="laservletpermodificare">Edit</a>
-										<a id="changeStatoLink_#_${utenteItem.id }" class="btn btn-outline-${utenteItem.isAttivo()?'danger':'success'} btn-sm link-for-modal" data-toggle="modal" data-target="#confirmOperationModal"  >${utenteItem.isAttivo()?'Disabilita':'Abilita'}</a>
-									</td>
-								</tr>
-							</c:forEach>
-		                </tbody>
-		            </table>
-		        </div>
-		   
-			<!-- end card-body -->			   
-		    </div>
+			<div class="alert alert-success alert-dismissible fade show  ${successMessage==null?'d-none':'' }" role="alert">
+			  ${successMessage}
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+			</div>
+			<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
+			  ${errorMessage}
+			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
+			</div>
+			
+			<div class='card'>
+			    <div class='card-header'>
+			        <h5>Lista dei risultati</h5> 
+			    </div>
+			    <div class='card-body'>
+			    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/film/insert">Add New</a>
+			    	<a href="${pageContext.request.contextPath}/utente/search" class='btn btn-outline-secondary' >
+				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
+				        </a>
+			    
+			        <div class='table-responsive'>
+			            <table class='table table-striped ' >
+			                <thead>
+			                    <tr>
+			                        <th>Nome</th>
+			                        <th>Cognome</th>
+			                        <th>Username</th>
+			                        <th>Stato</th>
+			                        <th>Azioni</th>
+			                    </tr>
+			                </thead>
+			                <tbody>
+			                	<c:forEach items="${utente_list_attribute }" var="utenteItem">
+									<tr>
+										<td>${utenteItem.nome }</td>
+										<td>${utenteItem.cognome }</td>
+										<td>${utenteItem.username }</td>
+										<td>${utenteItem.stato }</td>
+										<td>
+											<a class="btn btn-sm btn-outline-secondary" href="laservletpervisualizzare?idRegista=${utenteItem.id }">Visualizza</a>
+											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="laservletpermodificare">Edit</a>
+											<a id="changeStatoLink_#_${utenteItem.id }" class="btn btn-outline-${utenteItem.isAttivo()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${utenteItem.isAttivo()?'Disabilita':'Abilita'}</a>
+										</td>
+									</tr>
+								</c:forEach>
+			                </tbody>
+			            </table>
+			        </div>
+			   
+				<!-- end card-body -->			   
+			    </div>
+			</div>	
+	
 		</div>	
-	
-	
 	<!-- end container -->	
 	</main>
 	<jsp:include page="../footer.jsp" />
@@ -85,15 +74,13 @@
 	
 	
 	<!-- Modal -->
-	<div class="modal fade" id="confirmOperationModal" tabindex="-1" role="dialog" aria-labelledby="confirmOperationModalLabel"
+	<div class="modal fade" id="confirmOperationModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
 	    aria-hidden="true">
-	    <div class="modal-dialog" role="document">
+	    <div class="modal-dialog" >
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <h5 class="modal-title" id="confirmOperationModalLabel">Conferma Operazione</h5>
-	                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                    <span aria-hidden="true">&times;</span>
-	                </button>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	            </div>
 	            <div class="modal-body">
 	                Continuare con l'operazione?
@@ -101,7 +88,7 @@
 	            <form method="post" action="${pageContext.request.contextPath}/utente/cambiaStato" >
 		            <div class="modal-footer">
 		            	<input type="hidden" name="idUtenteForChangingStato" id="idUtenteForChangingStato">
-		                <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+		                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Chiudi</button>
 		                <input type="submit" value="Continua"  class="btn btn-primary">
 		            </div>
 	            </form>

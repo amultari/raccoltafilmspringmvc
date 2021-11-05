@@ -65,11 +65,11 @@
 								</div>
 								
 								
-							<div class="col-12">
-								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
-								<a class="btn btn-outline-primary ml-2" href="${pageContext.request.contextPath}/regista/insert">Add New</a>
-								<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
-							</div>
+								<div class="col-12">
+									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
+									<a class="btn btn-outline-primary ml-2" href="${pageContext.request.contextPath}/regista/insert">Add New</a>
+									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
+								</div>
 		
 						</form>
   
