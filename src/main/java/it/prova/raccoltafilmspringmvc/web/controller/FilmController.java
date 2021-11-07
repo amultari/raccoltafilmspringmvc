@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import it.prova.raccoltafilmspringmvc.dto.FilmDTO;
+import it.prova.raccoltafilmspringmvc.dto.RegistaDTO;
 import it.prova.raccoltafilmspringmvc.model.Film;
 import it.prova.raccoltafilmspringmvc.service.FilmService;
 import it.prova.raccoltafilmspringmvc.service.RegistaService;
@@ -28,6 +30,7 @@ public class FilmController {
 
 	@Autowired
 	private FilmService filmService;
+
 	@Autowired
 	private RegistaService registaService;
 
@@ -35,25 +38,37 @@ public class FilmController {
 	public ModelAndView listAllFilms() {
 		ModelAndView mv = new ModelAndView();
 		List<Film> films = filmService.listAllElements();
-		mv.addObject("film_list_attribute", films);
+		mv.addObject("film_list_attribute", FilmDTO.createFilmDTOListFromModelList(films, false));
 		mv.setViewName("film/list");
 		return mv;
 	}
 
 	@GetMapping("/insert")
 	public String createFilm(Model model) {
-		model.addAttribute("insert_film_attr", new Film());
+		model.addAttribute("insert_film_attr", new FilmDTO());
 		return "film/insert";
 	}
 
+	// inietto la request perché ci potrebbe tornare utile per ispezionare i
+	// parametri
 	@PostMapping("/save")
-	public String saveFilm(@Valid @ModelAttribute("insert_film_attr") Film film, BindingResult result,
+	public String saveFilm(@Valid @ModelAttribute("insert_film_attr") FilmDTO filmDTO, BindingResult result,
 			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		// se fosse un entity questa operazione sarebbe inutile perche provvederebbe
+		// da solo fare il binding dell'intero oggetto. Essendo un dto dobbiamo pensarci
+		// noi 'a mano'. Se validazione risulta ok devo caricare l'oggetto per 
+		// visualizzarne nome e cognome nel campo testo
+		if (filmDTO.getRegista() == null || filmDTO.getRegista().getId() == null)
+			result.rejectValue("regista", "regista.notnull");
+		else
+			filmDTO.setRegista(RegistaDTO
+					.buildRegistaDTOFromModel(registaService.caricaSingoloElemento(filmDTO.getRegista().getId())));
 
 		if (result.hasErrors()) {
 			return "film/insert";
 		}
-		filmService.inserisciNuovo(film);
+		filmService.inserisciNuovo(filmDTO.buildFilmModel());
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/film";
@@ -61,14 +76,14 @@ public class FilmController {
 
 	@GetMapping("/search")
 	public String searchFilm(Model model) {
-		model.addAttribute("registi_list_attribute", registaService.listAllElements());
+		model.addAttribute("registi_list_attribute", RegistaDTO.createRegistaDTOListFromModelList(registaService.listAllElements()));
 		return "film/search";
 	}
 
 	@PostMapping("/list")
-	public String listRegisti(Film filmExample, ModelMap model) {
-		List<Film> films = filmService.findByExample(filmExample);
-		model.addAttribute("film_list_attribute", films);
+	public String listFilms(FilmDTO filmExample, ModelMap model) {
+		List<Film> films = filmService.findByExample(filmExample.buildFilmModel());
+		model.addAttribute("film_list_attribute", FilmDTO.createFilmDTOListFromModelList(films, false));
 		return "film/list";
 	}
 
