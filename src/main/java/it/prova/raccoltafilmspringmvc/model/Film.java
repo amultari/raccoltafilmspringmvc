@@ -11,10 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "film")
@@ -24,28 +20,21 @@ public class Film {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private Long id;
-	
-	@NotBlank(message = "{titolo.notblank}")
-	@Size(min = 4, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
+
 	@Column(name = "titolo")
 	private String titolo;
-	
-	@NotBlank(message = "{genere.notblank}")
+
 	@Column(name = "genere")
 	private String genere;
-	
-	@NotNull(message = "{dataPubblicazione.notnull}")
+
 	@Column(name = "datapubblicazione")
 	private Date dataPubblicazione;
-	
-	@NotNull(message = "{minutiDurata.notnull}")
-	@Min(1)
+
 	@Column(name = "minutidurata")
 	private Integer minutiDurata;
 
-	@NotNull(message = "{regista.notnull}")
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "regista_id",nullable = false)
+	@JoinColumn(name = "regista_id", nullable = false)
 	private Regista regista;
 
 	public Film() {

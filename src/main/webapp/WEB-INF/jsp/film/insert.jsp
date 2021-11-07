@@ -90,7 +90,7 @@
 											<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="registaSearchInput"
 												name="registaInput" value="${insert_film_attr.regista.nome}${empty insert_film_attr.regista.nome?'':' '}${insert_film_attr.regista.cognome}">
 										</spring:bind>
-										<input type="hidden" name="regista" id="registaId" value="${insert_film_attr.regista.id}">
+										<input type="hidden" name="regista.id" id="registaId" value="${insert_film_attr.regista.id}">
 										<form:errors  path="regista" cssClass="error_field" />
 									</div>
 									

@@ -14,9 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "regista")
@@ -27,24 +24,18 @@ public class Regista {
 	@Column(name = "id")
 	private Long id;
 
-	@NotBlank(message = "{nome.notblank}")
 	@Column(name = "nome")
 	private String nome;
 
-	@NotBlank(message = "{cognome.notblank}")
 	@Column(name = "cognome")
 	private String cognome;
 
-	@NotBlank(message = "{nickName.notblank}")
-	@Size(min = 3, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	@Column(name = "nickname")
 	private String nickName;
 
-	@NotNull(message = "{dataDiNascita.notnull}")
 	@Column(name = "datadinascita")
 	private Date dataDiNascita;
 
-	@NotNull(message = "{sesso.notblank}")
 	@Column(name = "sesso")
 	@Enumerated(EnumType.STRING)
 	private Sesso sesso;
