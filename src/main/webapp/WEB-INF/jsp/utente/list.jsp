@@ -28,7 +28,7 @@
 			        <h5>Lista dei risultati</h5> 
 			    </div>
 			    <div class='card-body'>
-			    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/film/insert">Add New</a>
+			    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/utente/insert">Add New</a>
 			    	<a href="${pageContext.request.contextPath}/utente/search" class='btn btn-outline-secondary' >
 				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
 				        </a>

@@ -50,12 +50,20 @@
                             		title="formato : gg/mm/aaaa"  name="dateCreated" >
 							</div>
 							
-							<h5>Ecc.....Da Completare aggiungendo il resto</h5> 
+							<div class="col-md-3">
+								<label for="stato" class="form-label">Stato</label>
+								    <select class="form-select " id="stato" name="stato" >
+								    	<option value="" selected> - Selezionare - </option>
+								      	<option value="ATTIVO" >ATTIVO</option>
+								    	<option value="CREATO">CREATO</option>
+								      	<option value="DISABILITATO" >DISABILITATO</option>
+							    	</select>
+							</div>
 							
 							<div class="col-12">	
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
 								<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
-								<a class="btn btn-outline-primary ml-2" href="aggiungiutente">Add New</a>
+								<a class="btn btn-outline-primary ml-2" href="${pageContext.request.contextPath}/utente/insert">Add New</a>
 							</div>
 	
 							
