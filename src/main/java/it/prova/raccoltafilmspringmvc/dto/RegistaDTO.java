@@ -8,11 +8,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.StringUtils;
-
 import it.prova.raccoltafilmspringmvc.model.Regista;
 import it.prova.raccoltafilmspringmvc.model.Sesso;
-import it.prova.raccoltafilmspringmvc.utility.Utility;
 
 public class RegistaDTO {
 	
@@ -114,15 +111,6 @@ public class RegistaDTO {
 	public static RegistaDTO buildRegistaDTOFromModel(Regista registaModel) {
 		return new RegistaDTO(registaModel.getId(), registaModel.getNome(), registaModel.getCognome(),
 				registaModel.getNickName(), registaModel.getDataDiNascita(), registaModel.getSesso());
-	}
-
-	public static RegistaDTO createRegistaDTOFromParams(String nomeInputParam, String cognomeInputParam,
-			String nickNameInputParam, String dataDiNascitaStringParam, String sessoParam) {
-
-		RegistaDTO result = new RegistaDTO(nomeInputParam, cognomeInputParam, nickNameInputParam);
-		result.setSesso(StringUtils.isBlank(sessoParam) ? null : Sesso.valueOf(sessoParam));
-		result.setDataDiNascita(Utility.parseDateFromString(dataDiNascitaStringParam));
-		return result;
 	}
 
 	public static List<RegistaDTO> createRegistaDTOListFromModelList(List<Regista> modelListInput) {

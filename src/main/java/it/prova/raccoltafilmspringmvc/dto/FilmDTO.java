@@ -9,10 +9,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.math.NumberUtils;
-
 import it.prova.raccoltafilmspringmvc.model.Film;
-import it.prova.raccoltafilmspringmvc.utility.Utility;
 
 public class FilmDTO {
 	
@@ -121,17 +118,6 @@ public class FilmDTO {
 		if (includeRegisti)
 			result.setRegista(RegistaDTO.buildRegistaDTOFromModel(filmModel.getRegista()));
 
-		return result;
-	}
-
-	public static FilmDTO createFilmDTOFromParams(String titoloInputParam, String genereInputParam,
-			String minutiDurataInputParam, String dataPubblicazioneStringParam) {
-
-		FilmDTO result = new FilmDTO(titoloInputParam, genereInputParam);
-		if (NumberUtils.isCreatable(minutiDurataInputParam)) {
-			result.setMinutiDurata(Integer.parseInt(minutiDurataInputParam));
-		}
-		result.setDataPubblicazione(Utility.parseDateFromString(dataPubblicazioneStringParam));
 		return result;
 	}
 
