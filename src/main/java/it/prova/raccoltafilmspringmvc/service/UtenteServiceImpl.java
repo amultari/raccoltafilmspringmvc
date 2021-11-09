@@ -1,8 +1,10 @@
 package it.prova.raccoltafilmspringmvc.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,9 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Autowired
 	private UtenteRepository repository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	@Transactional(readOnly = true)
 	public List<Utente> listAllUtenti() {
@@ -33,6 +38,8 @@ public class UtenteServiceImpl implements UtenteService {
 
 	@Transactional
 	public void inserisciNuovo(Utente utenteInstance) {
+		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword())); 
+		utenteInstance.setDateCreated(new Date());
 		repository.save(utenteInstance);
 	}
 
