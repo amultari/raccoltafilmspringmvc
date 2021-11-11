@@ -47,9 +47,4 @@ public class RuoloServiceImpl implements RuoloService {
 		return ruoloRepository.findByDescrizioneAndCodice(descrizione, codice);
 	}
 
-	@Override
-	public List<Ruolo> listAllOrderByCodiceAscendente() {
-		return ruoloRepository.findAllByOrderByCodiceAsc();
-	}
-
 }

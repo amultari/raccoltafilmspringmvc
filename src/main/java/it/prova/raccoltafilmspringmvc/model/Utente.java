@@ -37,7 +37,7 @@ public class Utente {
 
 	// se non uso questa annotation viene gestito come un intero
 	@Enumerated(EnumType.STRING)
-	private StatoUtente stato = StatoUtente.CREATO;
+	private StatoUtente stato;
 
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))

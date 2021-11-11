@@ -9,6 +9,8 @@ public interface UtenteService {
 	public List<Utente> listAllUtenti() ;
 
 	public Utente caricaSingoloUtente(Long id);
+	
+	public Utente caricaSingoloUtenteConRuoli(Long id);
 
 	public void aggiorna(Utente utenteInstance);
 
@@ -22,7 +24,7 @@ public interface UtenteService {
 	
 	public Utente eseguiAccesso(String username, String password);
 	
-	public void invertUserAbilitation(Long utenteInstanceId);
+	public void changeUserAbilitation(Long utenteInstanceId);
 	
 	public Utente findByUsername(String username);
 

@@ -30,14 +30,28 @@ public class UtenteServiceImpl implements UtenteService {
 	public Utente caricaSingoloUtente(Long id) {
 		return repository.findById(id).orElse(null);
 	}
+	
+	@Transactional(readOnly = true)
+	public Utente caricaSingoloUtenteConRuoli(Long id) {
+		return repository.findByIdConRuoli(id).orElse(null);
+	}
 
 	@Transactional
 	public void aggiorna(Utente utenteInstance) {
-		repository.save(utenteInstance);
+		//deve aggiornare solo nome, cognome, username, ruoli
+		Utente utenteReloaded = repository.findById(utenteInstance.getId()).orElse(null);
+		if(utenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+		utenteReloaded.setNome(utenteInstance.getNome());
+		utenteReloaded.setCognome(utenteInstance.getCognome());
+		utenteReloaded.setUsername(utenteInstance.getUsername());
+		utenteReloaded.setRuoli(utenteInstance.getRuoli());
+		repository.save(utenteReloaded);
 	}
 
 	@Transactional
 	public void inserisciNuovo(Utente utenteInstance) {
+		utenteInstance.setStato(StatoUtente.CREATO);
 		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword())); 
 		utenteInstance.setDateCreated(new Date());
 		repository.save(utenteInstance);
@@ -65,12 +79,14 @@ public class UtenteServiceImpl implements UtenteService {
 	}
 
 	@Transactional
-	public void invertUserAbilitation(Long utenteInstanceId) {
+	public void changeUserAbilitation(Long utenteInstanceId) {
 		Utente utenteInstance = caricaSingoloUtente(utenteInstanceId);
 		if(utenteInstance == null)
 			throw new RuntimeException("Elemento non trovato.");
 		
-		if(utenteInstance.getStato().equals(StatoUtente.ATTIVO))
+		if(utenteInstance.getStato() == null || utenteInstance.getStato().equals(StatoUtente.CREATO))
+			utenteInstance.setStato(StatoUtente.ATTIVO);
+		else if(utenteInstance.getStato().equals(StatoUtente.ATTIVO))
 			utenteInstance.setStato(StatoUtente.DISABILITATO);
 		else if(utenteInstance.getStato().equals(StatoUtente.DISABILITATO))
 			utenteInstance.setStato(StatoUtente.ATTIVO);
@@ -80,5 +96,7 @@ public class UtenteServiceImpl implements UtenteService {
 	public Utente findByUsername(String username) {
 		return repository.findByUsername(username).orElse(null);
 	}
+
+	
 
 }

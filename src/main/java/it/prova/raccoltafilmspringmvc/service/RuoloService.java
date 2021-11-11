@@ -7,8 +7,6 @@ import it.prova.raccoltafilmspringmvc.model.Ruolo;
 public interface RuoloService {
 	public List<Ruolo> listAll() ;
 	
-	public List<Ruolo> listAllOrderByCodiceAscendente() ;
-
 	public Ruolo caricaSingoloElemento(Long id) ;
 
 	public void aggiorna(Ruolo ruoloInstance) ;

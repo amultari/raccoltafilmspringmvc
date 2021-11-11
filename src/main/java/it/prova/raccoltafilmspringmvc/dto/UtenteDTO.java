@@ -3,6 +3,7 @@ package it.prova.raccoltafilmspringmvc.dto;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -12,33 +13,49 @@ import javax.validation.constraints.Size;
 import it.prova.raccoltafilmspringmvc.model.Ruolo;
 import it.prova.raccoltafilmspringmvc.model.StatoUtente;
 import it.prova.raccoltafilmspringmvc.model.Utente;
+import it.prova.raccoltafilmspringmvc.validation.ValidationNoPassword;
+import it.prova.raccoltafilmspringmvc.validation.ValidationWithPassword;
 
 public class UtenteDTO {
 
 	private Long id;
 
-	@NotBlank(message = "{username.notblank}")
+	@NotBlank(message = "{username.notblank}",groups = {ValidationWithPassword.class,ValidationNoPassword.class})
 	@Size(min = 3, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String username;
 
-	@NotBlank(message = "{password.notblank}")
+	@NotBlank(message = "{password.notblank}",groups = ValidationWithPassword.class)
 	@Size(min = 8, max = 15, message = "Il valore inserito deve essere lungo tra {min} e {max} caratteri")
 	private String password;
 
 	private String confermaPassword;
 
-	@NotBlank(message = "{nome.notblank}")
+	@NotBlank(message = "{nome.notblank}",groups = {ValidationWithPassword.class,ValidationNoPassword.class})
 	private String nome;
 
-	@NotBlank(message = "{cognome.notblank}")
+	@NotBlank(message = "{cognome.notblank}",groups = {ValidationWithPassword.class,ValidationNoPassword.class})
 	private String cognome;
 
 	private Date dateCreated;
 
-	private StatoUtente stato = StatoUtente.CREATO;
+	private StatoUtente stato;
 
 	private Long[] ruoliIds;
 	private Set<RuoloDTO> ruoli = new HashSet<>(0);
+
+	public UtenteDTO() {
+	}
+
+	public UtenteDTO(Long id, String username, String nome, String cognome, StatoUtente stato,
+			List<RuoloDTO> ruoliList) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.stato = stato;
+		this.ruoli = new HashSet<>(ruoliList);
+	}
 
 	public Long getId() {
 		return id;
@@ -127,6 +144,13 @@ public class UtenteDTO {
 			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
 
 		return result;
+	}
+
+	//niente password...
+	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel) {
+		return new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getNome(),
+				utenteModel.getCognome(), utenteModel.getStato(),
+				RuoloDTO.createRuoloDTOListFromModelSet(utenteModel.getRuoli()));
 	}
 
 }

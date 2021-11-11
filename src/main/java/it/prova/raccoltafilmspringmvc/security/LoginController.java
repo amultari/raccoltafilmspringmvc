@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +39,8 @@ public class LoginController {
             error = "Invalid username and password!";
         }else if(exception instanceof LockedException) {
             error = "Attenzione! Account disabilitato";
+        }else if(exception instanceof DisabledException) {
+            error = "Attenzione! Account non abilitato";
         }else{
             error = "Invalid username and password!";
         }
