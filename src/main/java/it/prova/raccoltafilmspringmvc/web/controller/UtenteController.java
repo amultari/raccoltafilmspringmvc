@@ -19,7 +19,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.raccoltafilmspringmvc.dto.UtenteDTO;
 import it.prova.raccoltafilmspringmvc.model.Utente;
+import it.prova.raccoltafilmspringmvc.service.RuoloService;
 import it.prova.raccoltafilmspringmvc.service.UtenteService;
+import it.prova.raccoltafilmspringmvc.utility.UtilityForm;
 
 @Controller
 @RequestMapping(value = "/utente")
@@ -27,6 +29,9 @@ public class UtenteController {
 
 	@Autowired
 	private UtenteService utenteService;
+
+	@Autowired
+	private RuoloService ruoloService;
 
 	@GetMapping
 	public ModelAndView listAllUtenti() {
@@ -51,21 +56,25 @@ public class UtenteController {
 
 	@GetMapping("/insert")
 	public String create(Model model) {
+		model.addAttribute("mappaRuoliConSelezionati_attr",
+				UtilityForm.buildCheckedRolesForPages(ruoloService.listAllOrderByCodiceAscendente(), null));
 		model.addAttribute("insert_utente_attr", new UtenteDTO());
 		return "utente/insert";
 	}
 
 	@PostMapping("/save")
 	public String save(@Valid @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO, BindingResult result,
-			RedirectAttributes redirectAttrs) {
+			Model model, RedirectAttributes redirectAttrs) {
 
 		if (!result.hasFieldErrors("password") && !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
 			result.rejectValue("confermaPassword", "password.diverse");
 
 		if (result.hasErrors()) {
+			model.addAttribute("mappaRuoliConSelezionati_attr",
+					UtilityForm.buildCheckedRolesForPages(ruoloService.listAllOrderByCodiceAscendente(), utenteDTO.getRuoliIds()));
 			return "utente/insert";
 		}
-		utenteService.inserisciNuovo(utenteDTO.buildUtenteModel());
+		utenteService.inserisciNuovo(utenteDTO.buildUtenteModel(true));
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente";

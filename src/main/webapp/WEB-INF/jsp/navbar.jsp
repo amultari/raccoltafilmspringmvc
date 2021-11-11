@@ -42,7 +42,7 @@
       </div>
       <sec:authorize access="isAuthenticated()">
 	      <div class="col-md-3 text-end">
-	        <p class="navbar-text">Utente: ${userInfo.username }(${userInfo.nome } ${userInfo.cognome })
+	        <p class="navbar-text">Utente: <sec:authentication property="name"/> (${userInfo.nome } ${userInfo.cognome })
 	    	 <a href="${pageContext.request.contextPath}/logout">Logout</a></p>
 	      </div>
       </sec:authorize>

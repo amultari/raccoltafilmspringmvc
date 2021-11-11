@@ -89,10 +89,30 @@
 									<form:errors  path="confermaPassword" cssClass="error_field" />
 								</div>
 								
-							<div class="col-12">
-								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
-								<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
-							</div>
+								<%-- facendolo con i tag di spring purtroppo viene un po' spaginato, ho preferito a mano. E poi 
+									anche il binding andava gestito diversamente
+								
+								<div class="col-md-6 form-check">
+									<p>Ruoli:</p>
+									<form:checkboxes itemValue="id" itemLabel="codice"  element="div class='form-check'" items="${ruoli_totali_attr}" path="ruoli" cssClass=""/>
+								</div>
+								--%>
+								<div class="col-md-6 form-check">
+									<p>Ruoli:</p>
+									<c:forEach items="${mappaRuoliConSelezionati_attr}" var="ruoloEntry">
+										<div class="form-check">
+											  <input class="form-check-input" name="ruoliIds" type="checkbox" value="${ruoloEntry.key.id}" id="ruoloInput-${ruoloEntry.key.id}" ${ruoloEntry.value?'checked':'' }>
+											  <label class="form-check-label" for="ruoloInput-${ruoloEntry.key.id}" >
+											    ${ruoloEntry.key.codice}
+											  </label>
+										</div>
+								  	</c:forEach>
+								</div>
+								
+								<div class="col-12">
+									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>
+									<input class="btn btn-outline-warning" type="reset" value="Ripulisci">
+								</div>
 		
 						</form:form>
   

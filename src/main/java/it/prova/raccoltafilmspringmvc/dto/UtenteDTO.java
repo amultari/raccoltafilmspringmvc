@@ -1,12 +1,15 @@
 package it.prova.raccoltafilmspringmvc.dto;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import it.prova.raccoltafilmspringmvc.model.Ruolo;
 import it.prova.raccoltafilmspringmvc.model.StatoUtente;
 import it.prova.raccoltafilmspringmvc.model.Utente;
 
@@ -34,6 +37,7 @@ public class UtenteDTO {
 
 	private StatoUtente stato = StatoUtente.CREATO;
 
+	private Long[] ruoliIds;
 	private Set<RuoloDTO> ruoli = new HashSet<>(0);
 
 	public Long getId() {
@@ -108,8 +112,21 @@ public class UtenteDTO {
 		this.confermaPassword = confermaPassword;
 	}
 
-	public Utente buildUtenteModel() {
-		return new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dateCreated, this.stato);
+	public Long[] getRuoliIds() {
+		return ruoliIds;
+	}
+
+	public void setRuoliIds(Long[] ruoliIds) {
+		this.ruoliIds = ruoliIds;
+	}
+
+	public Utente buildUtenteModel(boolean includeIdRoles) {
+		Utente result = new Utente(this.id, this.username, this.password, this.nome, this.cognome, this.dateCreated,
+				this.stato);
+		if (includeIdRoles && ruoliIds != null)
+			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
+
+		return result;
 	}
 
 }

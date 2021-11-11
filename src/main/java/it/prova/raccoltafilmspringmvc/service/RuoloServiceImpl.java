@@ -17,8 +17,7 @@ public class RuoloServiceImpl implements RuoloService {
 
 	@Transactional(readOnly = true)
 	public List<Ruolo> listAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Ruolo>)ruoloRepository.findAll();
 	}
 
 	@Transactional(readOnly = true)
@@ -46,6 +45,11 @@ public class RuoloServiceImpl implements RuoloService {
 	@Transactional(readOnly = true)
 	public Ruolo cercaPerDescrizioneECodice(String descrizione, String codice) {
 		return ruoloRepository.findByDescrizioneAndCodice(descrizione, codice);
+	}
+
+	@Override
+	public List<Ruolo> listAllOrderByCodiceAscendente() {
+		return ruoloRepository.findAllByOrderByCodiceAsc();
 	}
 
 }
