@@ -1,4 +1,3 @@
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!doctype html>
@@ -89,25 +88,27 @@
 									<form:errors  path="confermaPassword" cssClass="error_field" />
 								</div>
 								
-								<%-- facendolo con i tag di spring purtroppo viene un po' spaginato, ho preferito a mano. E poi 
-									anche il binding andava gestito diversamente
 								
-								<div class="col-md-6 form-check">
+								<%--  checkbox ruoli 	--%>
+								<%-- facendolo con i tag di spring purtroppo viene un po' spaginato quindi aggiungo class 'a mano'	--%>
+								<div class="col-md-6 form-check" id="ruoliDivId">
 									<p>Ruoli:</p>
-									<form:checkboxes itemValue="id" itemLabel="codice"  element="div class='form-check'" items="${ruoli_totali_attr}" path="ruoli" cssClass=""/>
+									<form:checkboxes itemValue="id" itemLabel="codice"  element="div class='form-check'" items="${ruoli_totali_attr}" path="ruoliIds" />
 								</div>
-								--%>
-								<div class="col-md-6 form-check">
-									<p>Ruoli:</p>
-									<c:forEach items="${mappaRuoliConSelezionati_attr}" var="ruoloEntry">
-										<div class="form-check">
-											  <input class="form-check-input" name="ruoliIds" type="checkbox" value="${ruoloEntry.key.id}" id="ruoloInput-${ruoloEntry.key.id}" ${ruoloEntry.value?'checked':'' }>
-											  <label class="form-check-label" for="ruoloInput-${ruoloEntry.key.id}" >
-											    ${ruoloEntry.key.codice}
-											  </label>
-										</div>
-								  	</c:forEach>
-								</div>
+								<script>
+									$(document).ready(function(){
+										
+										$("#ruoliDivId :input").each(function () {
+											$(this).addClass('form-check-input'); 
+										});
+										$("#ruoliDivId label").each(function () {
+											$(this).addClass('form-check-label'); 
+										});
+										
+									});
+								</script>
+								<%-- fine checkbox ruoli 	--%>
+								
 								
 								<div class="col-12">
 									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>

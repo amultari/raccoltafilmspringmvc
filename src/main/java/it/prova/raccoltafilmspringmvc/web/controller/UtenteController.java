@@ -24,7 +24,6 @@ import it.prova.raccoltafilmspringmvc.dto.UtenteDTO;
 import it.prova.raccoltafilmspringmvc.model.Utente;
 import it.prova.raccoltafilmspringmvc.service.RuoloService;
 import it.prova.raccoltafilmspringmvc.service.UtenteService;
-import it.prova.raccoltafilmspringmvc.utility.UtilityForm;
 import it.prova.raccoltafilmspringmvc.validation.ValidationNoPassword;
 import it.prova.raccoltafilmspringmvc.validation.ValidationWithPassword;
 
@@ -61,23 +60,24 @@ public class UtenteController {
 
 	@GetMapping("/insert")
 	public String create(Model model) {
-		model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm
-				.buildCheckedRolesForPages(RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), null));
+		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 		model.addAttribute("insert_utente_attr", new UtenteDTO());
 		return "utente/insert";
 	}
 
-	//per la validazione devo usare i groups in quanto nella insert devo validare la pwd, nella edit no
+	// per la validazione devo usare i groups in quanto nella insert devo validare
+	// la pwd, nella edit no
 	@PostMapping("/save")
-	public String save(@Validated({ValidationWithPassword.class,ValidationNoPassword.class}) @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO, BindingResult result,
-			Model model, RedirectAttributes redirectAttrs) {
+	public String save(
+			@Validated({ ValidationWithPassword.class,
+					ValidationNoPassword.class }) @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
 		if (!result.hasFieldErrors("password") && !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
 			result.rejectValue("confermaPassword", "password.diverse");
 
 		if (result.hasErrors()) {
-			model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm.buildCheckedRolesForPages(
-					RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), utenteDTO.getRuoliIds()));
+			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 			return "utente/insert";
 		}
 		utenteService.inserisciNuovo(utenteDTO.buildUtenteModel(true));
@@ -90,20 +90,16 @@ public class UtenteController {
 	public String edit(@PathVariable(required = true) Long idUtente, Model model) {
 		Utente utenteModel = utenteService.caricaSingoloUtenteConRuoli(idUtente);
 		model.addAttribute("edit_utente_attr", UtenteDTO.buildUtenteDTOFromModel(utenteModel));
-		model.addAttribute("mappaRuoliConSelezionati_attr",
-				UtilityForm.buildCheckedRolesFromRolesAlreadyInUtente(
-						RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()),
-						RuoloDTO.createRuoloDTOListFromModelSet(utenteModel.getRuoli())));
+		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 		return "utente/edit";
 	}
 
 	@PostMapping("/update")
-	public String update(@Validated(ValidationNoPassword.class) @ModelAttribute("edit_utente_attr") UtenteDTO utenteDTO, BindingResult result,
-			Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+	public String update(@Validated(ValidationNoPassword.class) @ModelAttribute("edit_utente_attr") UtenteDTO utenteDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
-			model.addAttribute("mappaRuoliConSelezionati_attr", UtilityForm.buildCheckedRolesForPages(
-					RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()), utenteDTO.getRuoliIds()));
+			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 			return "utente/edit";
 		}
 		utenteService.aggiorna(utenteDTO.buildUtenteModel(true));
