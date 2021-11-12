@@ -116,6 +116,12 @@
 								<script>
 									$("#registaSearchInput").autocomplete({
 										 source: function(request, response) {
+											 	//quando parte la richiesta ajax devo ripulire registaId
+											 	//altrimenti quando modifico il campo, cancellando
+											 	//qualche carattere, mi rimarrebbe comunque valorizzato il 
+											 	//'vecchio id'
+											 	$('#registaId').val('');
+											 	
 										        $.ajax({
 										            url: "${pageContext.request.contextPath}/regista/searchRegistiAjax",
 										            datatype: "json",
@@ -130,12 +136,12 @@
 										                    }
 										                }))
 										            }
-										        })
+										        });
 										    },
 										//quando seleziono la voce nel campo deve valorizzarsi la descrizione
 									    focus: function(event, ui) {
-									        $("#registaSearchInput").val(ui.item.label)
-									        return false
+									        $("#registaSearchInput").val(ui.item.label);
+									        return false;
 									    },
 									    minLength: 2,
 									    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
