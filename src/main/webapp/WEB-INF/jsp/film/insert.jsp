@@ -117,7 +117,7 @@
 									$("#registaSearchInput").autocomplete({
 										 source: function(request, response) {
 										        $.ajax({
-										            url: "../regista/searchRegistiAjax",
+										            url: "${pageContext.request.contextPath}/regista/searchRegistiAjax",
 										            datatype: "json",
 										            data: {
 										                term: request.term,   
