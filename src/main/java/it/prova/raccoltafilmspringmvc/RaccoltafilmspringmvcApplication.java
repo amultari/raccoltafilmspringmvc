@@ -40,33 +40,37 @@ public class RaccoltafilmspringmvcApplication implements CommandLineRunner {
 		//faccio qui perche gia lo fa il service di utente, durante inserisciNuovo
 		if (utenteServiceInstance.findByUsername("admin") == null) {
 			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", new Date());
-			admin.setStato(StatoUtente.ATTIVO);
 			admin.getRuoli().add(ruoloServiceInstance.cercaPerDescrizioneECodice("Administrator", "ROLE_ADMIN"));
 			utenteServiceInstance.inserisciNuovo(admin);
+			//l'inserimento avviene come created ma io voglio attivarlo
+			utenteServiceInstance.changeUserAbilitation(admin.getId());
 		}
 
 		if (utenteServiceInstance.findByUsername("user") == null) {
 			Utente classicUser = new Utente("user", "user", "Antonio", "Verdi", new Date());
-			classicUser.setStato(StatoUtente.ATTIVO);
 			classicUser.getRuoli()
 					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", "ROLE_CLASSIC_USER"));
 			utenteServiceInstance.inserisciNuovo(classicUser);
+			//l'inserimento avviene come created ma io voglio attivarlo
+			utenteServiceInstance.changeUserAbilitation(classicUser.getId());
 		}
 
 		if (utenteServiceInstance.findByUsername("user1") == null) {
 			Utente classicUser1 = new Utente("user1", "user1", "Antonioo", "Verdii", new Date());
-			classicUser1.setStato(StatoUtente.ATTIVO);
 			classicUser1.getRuoli()
 					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", "ROLE_CLASSIC_USER"));
 			utenteServiceInstance.inserisciNuovo(classicUser1);
+			//l'inserimento avviene come created ma io voglio attivarlo
+			utenteServiceInstance.changeUserAbilitation(classicUser1.getId());
 		}
 
 		if (utenteServiceInstance.findByUsername("user2") == null) {
 			Utente classicUser2 = new Utente("user2", "user2", "Antoniooo", "Verdiii", new Date());
-			classicUser2.setStato(StatoUtente.ATTIVO);
 			classicUser2.getRuoli()
 					.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", "ROLE_CLASSIC_USER"));
 			utenteServiceInstance.inserisciNuovo(classicUser2);
+			//l'inserimento avviene come created ma io voglio attivarlo
+			utenteServiceInstance.changeUserAbilitation(classicUser2.getId());
 		}
 
 	}
