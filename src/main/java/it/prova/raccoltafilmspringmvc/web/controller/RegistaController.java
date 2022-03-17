@@ -40,7 +40,7 @@ public class RegistaController {
 	public ModelAndView listAllRegisti() {
 		ModelAndView mv = new ModelAndView();
 		List<Regista> registi = registaService.listAllElements();
-		//trasformiamo in DTO
+		// trasformiamo in DTO
 		mv.addObject("registi_list_attribute", RegistaDTO.createRegistaDTOListFromModelList(registi));
 		mv.setViewName("regista/list");
 		return mv;
@@ -55,12 +55,12 @@ public class RegistaController {
 	@PostMapping("/save")
 	public String saveRegista(@Valid @ModelAttribute("insert_regista_attr") RegistaDTO registaDTO, BindingResult result,
 			RedirectAttributes redirectAttrs) {
-		
+
 		if (result.hasErrors()) {
 			return "regista/insert";
 		}
 		registaService.inserisciNuovo(registaDTO.buildRegistaModel());
-		
+
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/regista";
 	}
@@ -71,31 +71,36 @@ public class RegistaController {
 	}
 
 	@PostMapping("/list")
-	public String listRegisti(RegistaDTO registaExample, ModelMap model) {
-		List<Regista> registi = registaService.findByExample(registaExample.buildRegistaModel());
+	public String listRegisti(RegistaDTO registaExample, @RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
+			ModelMap model) {
+
+		List<Regista> registi = registaService.findByExampleWithPagination(registaExample.buildRegistaModel(), pageNo,
+				pageSize, sortBy).getContent();
+
 		model.addAttribute("registi_list_attribute", RegistaDTO.createRegistaDTOListFromModelList(registi));
 		return "regista/list";
 	}
-	
+
 	@GetMapping("/edit/{idRegista}")
 	public String editRegista(@PathVariable(required = true) Long idRegista, Model model) {
-		model.addAttribute("edit_regista_attr", RegistaDTO.buildRegistaDTOFromModel(registaService.caricaSingoloElemento(idRegista)));
+		model.addAttribute("edit_regista_attr",
+				RegistaDTO.buildRegistaDTOFromModel(registaService.caricaSingoloElemento(idRegista)));
 		return "regista/edit";
 	}
-	
+
 	@PostMapping("/update")
 	public String updateRegista(@Valid @ModelAttribute("edit_regista_attr") RegistaDTO registaDTO, BindingResult result,
 			RedirectAttributes redirectAttrs, HttpServletRequest request) {
-		
+
 		if (result.hasErrors()) {
 			return "regista/edit";
 		}
 		registaService.aggiorna(registaDTO.buildRegistaModel());
-		
+
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/regista";
 	}
-
 
 	@GetMapping(value = "/searchRegistiAjax", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody String searchRegista(@RequestParam String term) {
