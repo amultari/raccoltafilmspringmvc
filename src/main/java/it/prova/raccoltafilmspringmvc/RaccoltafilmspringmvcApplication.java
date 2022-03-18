@@ -8,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import it.prova.raccoltafilmspringmvc.model.Ruolo;
-import it.prova.raccoltafilmspringmvc.model.StatoUtente;
 import it.prova.raccoltafilmspringmvc.model.Utente;
 import it.prova.raccoltafilmspringmvc.service.RuoloService;
 import it.prova.raccoltafilmspringmvc.service.UtenteService;
