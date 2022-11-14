@@ -15,20 +15,20 @@ public class RegistaDTO {
 	
 	private Long id;
 	
-	@NotBlank(message = "{nome.notblank}")
+	@NotBlank(message = "{regista.nome.notblank}")
 	private String nome;
 	
-	@NotBlank(message = "{cognome.notblank}")
+	@NotBlank(message = "{regista.cognome.notblank}")
 	private String cognome;
 	
-	@NotBlank(message = "{nickName.notblank}")
+	@NotBlank(message = "{regista.nickName.notblank}")
 	@Size(min = 3, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String nickName;
 	
-	@NotNull(message = "{dataDiNascita.notnull}")
+	@NotNull(message = "{regista.dataDiNascita.notnull}")
 	private Date dataDiNascita;
 	
-	@NotNull(message = "{sesso.notblank}")
+	@NotNull(message = "{regista.sesso.notblank}")
 	private Sesso sesso;
 
 	// la proprieta uno a molti e cioe 'films' non serve al momento nelle view
