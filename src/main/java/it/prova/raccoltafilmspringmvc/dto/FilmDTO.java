@@ -15,21 +15,21 @@ public class FilmDTO {
 	
 	private Long id;
 
-	@NotBlank(message = "{titolo.notblank}")
-	@Size(min = 4, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
+	@NotBlank(message = "{film.titolo.notblank}")
+	@Size(min = 4, max = 40, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
 	private String titolo;
 
-	@NotBlank(message = "{genere.notblank}")
+	@NotBlank(message = "{film.genere.notblank}")
 	private String genere;
 
-	@NotNull(message = "{dataPubblicazione.notnull}")
+	@NotNull(message = "{film.dataPubblicazione.notnull}")
 	private Date dataPubblicazione;
 
-	@NotNull(message = "{minutiDurata.notnull}")
+	@NotNull(message = "{film.minutiDurata.notnull}")
 	@Min(1)
 	private Integer minutiDurata;
 
-	@NotNull(message = "{regista.notnull}")
+	@NotNull(message = "{film.regista.notnull}")
 	private RegistaDTO regista;
 
 	public FilmDTO() {

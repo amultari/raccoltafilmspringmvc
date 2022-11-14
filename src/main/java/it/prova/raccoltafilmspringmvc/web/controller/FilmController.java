@@ -60,7 +60,7 @@ public class FilmController {
 		// noi 'a mano'. Se validazione risulta ok devo caricare l'oggetto per 
 		// visualizzarne nome e cognome nel campo testo
 		if (filmDTO.getRegista() == null || filmDTO.getRegista().getId() == null)
-			result.rejectValue("regista", "regista.notnull");
+			result.rejectValue("regista", "film.regista.notnull");
 		else
 			filmDTO.setRegista(RegistaDTO
 					.buildRegistaDTOFromModel(registaService.caricaSingoloElemento(filmDTO.getRegista().getId())));

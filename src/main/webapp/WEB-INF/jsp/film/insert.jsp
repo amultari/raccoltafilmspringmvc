@@ -44,11 +44,14 @@
 					        <h5>Inserisci nuovo elemento</h5> 
 					    </div>
 					    <div class='card-body'>
+					    
+					    		<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
+		
 			
 								<form:form method="post" modelAttribute="insert_film_attr" action="save" novalidate="novalidate" class="row g-3">
 								
 									<div class="col-md-6">
-										<label for="titolo" class="form-label">Titolo</label>
+										<label for="titolo" class="form-label">Titolo <span class="text-danger">*</span></label>
 										<spring:bind path="titolo">
 											<input type="text" name="titolo" id="titolo" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il titolo" value="${insert_film_attr.titolo }">
 										</spring:bind>
@@ -56,7 +59,7 @@
 									</div>
 										
 									<div class="col-md-6">
-										<label for="genere" class="form-label">Genere</label>
+										<label for="genere" class="form-label">Genere <span class="text-danger">*</span></label>
 										<spring:bind path="genere">
 											<input type="text" name="genere" id="genere" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il genere" value="${insert_film_attr.genere }">
 										</spring:bind>
@@ -66,7 +69,7 @@
 									<div class="col-md-6">	
 										<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_film_attr.dataPubblicazione}' />
 										<div class="form-group col-md-6">
-											<label for="dataPubblicazione" class="form-label">Data di Pubblicazione</label>
+											<label for="dataPubblicazione" class="form-label">Data di Pubblicazione <span class="text-danger">*</span></label>
 			                        		<spring:bind path="dataPubblicazione">
 				                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataPubblicazione" type="date" placeholder="dd/MM/yy"
 				                            		title="formato : gg/mm/aaaa"  name="dataPubblicazione" value="${parsedDate}" >
@@ -76,7 +79,7 @@
 									</div>
 										
 									<div class="col-md-6">
-										<label for="minutiDurata" class="form-label">Durata (minuti)</label>
+										<label for="minutiDurata" class="form-label">Durata (minuti) <span class="text-danger">*</span></label>
 										<spring:bind path="minutiDurata">
 											<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="minutiDurata" id="minutiDurata" placeholder="Inserire la durata" value="${insert_film_attr.minutiDurata }">
 										</spring:bind>
@@ -85,7 +88,7 @@
 									
 									
 									<div class="col-md-6">
-										<label for="registaSearchInput" class="form-label">Regista:</label>
+										<label for="registaSearchInput" class="form-label">Regista: <span class="text-danger">*</span></label>
 										<spring:bind path="regista">
 											<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="registaSearchInput"
 												name="registaInput" value="${insert_film_attr.regista.nome}${empty insert_film_attr.regista.nome?'':' '}${insert_film_attr.regista.cognome}">
