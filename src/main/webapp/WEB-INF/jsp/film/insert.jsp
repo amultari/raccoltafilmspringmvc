@@ -150,8 +150,17 @@
 									    //quando seleziono la voce nel campo hidden deve valorizzarsi l'id
 									    select: function( event, ui ) {
 									    	$('#registaId').val(ui.item.value);
-									    	//console.log($('#registaId').val())
 									        return false;
+									    },
+									    //questo serve in quanto se io imposto un regista e poi lo cancello
+									    //e faccio altro nella pagina, il valore che poi verrà inviato al 
+									    //controller deve essere resettato altrimenti non mi darebbe
+									    //l'errore di validazione di regista mancante
+									    change: function( event, ui ) {
+									    	if(!$("#registaSearchInput").val()){
+									    		$('#registaId').val('');
+									    		return false;
+									    	}
 									    }
 									});
 								</script>
