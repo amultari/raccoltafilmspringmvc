@@ -58,8 +58,8 @@ public class UtenteServiceImpl implements UtenteService {
 	}
 
 	@Transactional
-	public void rimuovi(Utente utenteInstance) {
-		repository.delete(utenteInstance);
+	public void rimuovi(Long idToDelete) {
+		repository.deleteById(idToDelete);
 	}
 
 	@Transactional(readOnly = true)

@@ -37,7 +37,7 @@ public class RuoloServiceImpl implements RuoloService {
 	}
 
 	@Transactional
-	public void rimuovi(Ruolo ruoloInstance) {
+	public void rimuovi(Long idToDelete) {
 		// TODO Auto-generated method stub
 
 	}
