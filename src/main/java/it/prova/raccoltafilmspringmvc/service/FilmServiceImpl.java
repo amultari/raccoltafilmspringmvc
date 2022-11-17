@@ -41,8 +41,8 @@ public class FilmServiceImpl implements FilmService {
 	}
 
 	@Transactional
-	public void rimuovi(Film filmInstance) {
-		repository.delete(filmInstance);
+	public void rimuovi(Long idFilmToDelete) {
+		repository.deleteById(idFilmToDelete);;
 	}
 
 	@Transactional(readOnly = true)
