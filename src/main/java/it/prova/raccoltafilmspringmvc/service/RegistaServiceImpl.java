@@ -50,8 +50,8 @@ public class RegistaServiceImpl implements RegistaService {
 	}
 
 	@Transactional
-	public void rimuovi(Regista registaInstance) {
-		repository.delete(registaInstance);
+	public void rimuovi(Long idToDelete) {
+		repository.deleteById(idToDelete);
 	}
 
 	@Transactional(readOnly = true)
