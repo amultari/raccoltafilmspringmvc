@@ -57,7 +57,7 @@ public class FilmController {
 
 		// se fosse un entity questa operazione sarebbe inutile perche provvederebbe
 		// da solo fare il binding dell'intero oggetto. Essendo un dto dobbiamo pensarci
-		// noi 'a mano'. Se validazione risulta ok devo caricare l'oggetto per 
+		// noi 'a mano'. Se validazione risulta ok devo caricare l'oggetto per
 		// visualizzarne nome e cognome nel campo testo
 		if (filmDTO.getRegista() == null || filmDTO.getRegista().getId() == null)
 			result.rejectValue("regista", "film.regista.notnull");
@@ -76,7 +76,8 @@ public class FilmController {
 
 	@GetMapping("/search")
 	public String searchFilm(Model model) {
-		model.addAttribute("registi_list_attribute", RegistaDTO.createRegistaDTOListFromModelList(registaService.listAllElements()));
+		model.addAttribute("registi_list_attribute",
+				RegistaDTO.createRegistaDTOListFromModelList(registaService.listAllElements()));
 		return "film/search";
 	}
 
@@ -89,7 +90,8 @@ public class FilmController {
 
 	@GetMapping("/show/{idFilm}")
 	public String showFilm(@PathVariable(required = true) Long idFilm, Model model) {
-		model.addAttribute("show_film_attr", filmService.caricaSingoloElementoEager(idFilm));
+		model.addAttribute("show_film_attr",
+				FilmDTO.buildFilmDTOFromModel(filmService.caricaSingoloElementoEager(idFilm), true));
 		return "film/show";
 	}
 
