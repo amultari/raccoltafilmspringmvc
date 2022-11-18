@@ -1,7 +1,5 @@
 package it.prova.raccoltafilmspringmvc.web.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +38,8 @@ public class UtenteController {
 	@GetMapping
 	public ModelAndView listAllUtenti() {
 		ModelAndView mv = new ModelAndView();
-		List<Utente> utenti = utenteService.listAllUtenti();
-		mv.addObject("utente_list_attribute", utenti);
+		mv.addObject("utente_list_attribute",
+				UtenteDTO.createUtenteDTOListFromModelList(utenteService.listAllUtenti(), false));
 		mv.setViewName("utente/list");
 		return mv;
 	}
@@ -53,8 +51,8 @@ public class UtenteController {
 
 	@PostMapping("/list")
 	public String listUtenti(Utente utenteExample, ModelMap model) {
-		List<Utente> utenti = utenteService.findByExample(utenteExample);
-		model.addAttribute("utente_list_attribute", utenti);
+		model.addAttribute("utente_list_attribute",
+				UtenteDTO.createUtenteDTOListFromModelList(utenteService.findByExample(utenteExample), false));
 		return "utente/list";
 	}
 
@@ -89,7 +87,7 @@ public class UtenteController {
 	@GetMapping("/edit/{idUtente}")
 	public String edit(@PathVariable(required = true) Long idUtente, Model model) {
 		Utente utenteModel = utenteService.caricaSingoloUtenteConRuoli(idUtente);
-		model.addAttribute("edit_utente_attr", UtenteDTO.buildUtenteDTOFromModel(utenteModel));
+		model.addAttribute("edit_utente_attr", UtenteDTO.buildUtenteDTOFromModel(utenteModel,true));
 		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 		return "utente/edit";
 	}
