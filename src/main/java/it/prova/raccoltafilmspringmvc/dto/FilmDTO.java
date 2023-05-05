@@ -1,6 +1,6 @@
 package it.prova.raccoltafilmspringmvc.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 import it.prova.raccoltafilmspringmvc.model.Film;
 
 public class FilmDTO {
-	
+
 	private Long id;
 
 	@NotBlank(message = "{film.titolo.notblank}")
@@ -23,7 +23,7 @@ public class FilmDTO {
 	private String genere;
 
 	@NotNull(message = "{film.dataPubblicazione.notnull}")
-	private Date dataPubblicazione;
+	private LocalDate dataPubblicazione;
 
 	@NotNull(message = "{film.minutiDurata.notnull}")
 	@Min(1)
@@ -35,7 +35,7 @@ public class FilmDTO {
 	public FilmDTO() {
 	}
 
-	public FilmDTO(Long id, String titolo, String genere, Date dataPubblicazione, Integer minutiDurata,
+	public FilmDTO(Long id, String titolo, String genere, LocalDate dataPubblicazione, Integer minutiDurata,
 			RegistaDTO regista) {
 		this.id = id;
 		this.titolo = titolo;
@@ -45,7 +45,7 @@ public class FilmDTO {
 		this.regista = regista;
 	}
 
-	public FilmDTO(Long id, String titolo, String genere, Date dataPubblicazione, Integer minutiDurata) {
+	public FilmDTO(Long id, String titolo, String genere, LocalDate dataPubblicazione, Integer minutiDurata) {
 		this.id = id;
 		this.titolo = titolo;
 		this.genere = genere;
@@ -82,11 +82,11 @@ public class FilmDTO {
 		this.genere = genere;
 	}
 
-	public Date getDataPubblicazione() {
+	public LocalDate getDataPubblicazione() {
 		return dataPubblicazione;
 	}
 
-	public void setDataPubblicazione(Date dataPubblicazione) {
+	public void setDataPubblicazione(LocalDate dataPubblicazione) {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 

@@ -1,6 +1,6 @@
 package it.prova.raccoltafilmspringmvc.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +26,7 @@ public class RegistaDTO {
 	private String nickName;
 	
 	@NotNull(message = "{regista.dataDiNascita.notnull}")
-	private Date dataDiNascita;
+	private LocalDate dataDiNascita;
 	
 	@NotNull(message = "{regista.sesso.notblank}")
 	private Sesso sesso;
@@ -41,7 +41,7 @@ public class RegistaDTO {
 		this.id = id;
 	}
 
-	public RegistaDTO(Long id, String nome, String cognome, String nickName, Date dataDiNascita, Sesso sesso) {
+	public RegistaDTO(Long id, String nome, String cognome, String nickName, LocalDate dataDiNascita, Sesso sesso) {
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
@@ -88,11 +88,11 @@ public class RegistaDTO {
 		this.nickName = nickName;
 	}
 
-	public Date getDataDiNascita() {
+	public LocalDate getDataDiNascita() {
 		return dataDiNascita;
 	}
 
-	public void setDataDiNascita(Date dataDiNascita) {
+	public void setDataDiNascita(LocalDate dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
 	}
 

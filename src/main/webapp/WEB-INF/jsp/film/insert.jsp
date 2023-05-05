@@ -67,7 +67,8 @@
 									</div>
 									
 									<div class="col-md-6">	
-										<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_film_attr.dataPubblicazione}' />
+										<fmt:parseDate value="${insert_film_attr.dataPubblicazione}" pattern="yyyy-MM-dd" var="localDateToBeParsed" type="date"/>
+										<fmt:formatDate pattern="yyyy-MM-dd" value="${localDateToBeParsed}" var="parsedDate"/>
 										<div class="form-group col-md-6">
 											<label for="dataPubblicazione" class="form-label">Data di Pubblicazione <span class="text-danger">*</span></label>
 			                        		<spring:bind path="dataPubblicazione">

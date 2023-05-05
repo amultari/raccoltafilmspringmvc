@@ -64,7 +64,10 @@
 											<td>${registaItem.nome }</td>
 											<td>${registaItem.cognome }</td>
 											<td>${registaItem.nickName }</td>
-											<td><fmt:formatDate type = "date" value = "${registaItem.dataDiNascita }" /></td>
+											<td>
+												<fmt:parseDate value="${registaItem.dataDiNascita}" pattern="yyyy-MM-dd" var="localDateToBeParsed" type="date"/>
+												<fmt:formatDate pattern="dd/MM/yyyy" value="${localDateToBeParsed}" />
+											</td>
 											<td>${registaItem.sesso.abbreviazione }</td>
 											<td>
 												<a class="btn  btn-sm btn-outline-secondary" href="laservletpervisualizzare">Visualizza</a>
