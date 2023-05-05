@@ -55,7 +55,10 @@
 										<tr>
 											<td>${filmItem.titolo }</td>
 											<td>${filmItem.genere }</td>
-											<td><fmt:formatDate type = "date" value = "${filmItem.dataPubblicazione }" /></td>
+											<td>
+												<fmt:parseDate value="${filmItem.dataPubblicazione}" pattern="yyyy-MM-dd" var="localDateToBeParsed" type="date"/>
+												<fmt:formatDate pattern="dd/MM/yyyy" value="${localDateToBeParsed}" />
+											</td>
 											<td>${filmItem.minutiDurata }</td>
 											<td>
 												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/film/show/${filmItem.id }">Visualizza</a>

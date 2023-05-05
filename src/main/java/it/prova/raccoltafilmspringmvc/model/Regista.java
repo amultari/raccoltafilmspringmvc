@@ -1,6 +1,6 @@
 package it.prova.raccoltafilmspringmvc.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -34,7 +34,7 @@ public class Regista {
 	private String nickName;
 
 	@Column(name = "datadinascita")
-	private Date dataDiNascita;
+	private LocalDate dataDiNascita;
 
 	@Column(name = "sesso")
 	@Enumerated(EnumType.STRING)
@@ -46,7 +46,7 @@ public class Regista {
 	public Regista() {
 	}
 
-	public Regista(Long id, String nome, String cognome, String nickName, Date dataDiNascita, Sesso sesso) {
+	public Regista(Long id, String nome, String cognome, String nickName, LocalDate dataDiNascita, Sesso sesso) {
 		this.id = id;
 		this.nome = nome;
 		this.cognome = cognome;
@@ -55,7 +55,7 @@ public class Regista {
 		this.sesso = sesso;
 	}
 
-	public Regista(String nome, String cognome, String nickName, Date dataDiNascita, Sesso sesso) {
+	public Regista(String nome, String cognome, String nickName, LocalDate dataDiNascita, Sesso sesso) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.nickName = nickName;
@@ -112,11 +112,11 @@ public class Regista {
 		this.nickName = nickName;
 	}
 
-	public Date getDataDiNascita() {
+	public LocalDate getDataDiNascita() {
 		return dataDiNascita;
 	}
 
-	public void setDataDiNascita(Date dataDiNascita) {
+	public void setDataDiNascita(LocalDate dataDiNascita) {
 		this.dataDiNascita = dataDiNascita;
 	}
 
